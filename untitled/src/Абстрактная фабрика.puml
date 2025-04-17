@@ -1,0 +1,65 @@
+@startuml
+
+interface Car {
+    + drive(): void
+}
+note right of Car
+    Интерфейс автомобиля
+    с методом drive()
+end note
+
+class Sedan implements Car {
+    + drive(): void
+}
+note right of Sedan
+    Класс седана
+end note
+
+class SUV implements Car {
+    + drive(): void
+}
+note right of SUV
+    Класс внедорожника
+end note
+
+interface CarFactory {
+    + createCar(): Car
+}
+note right of CarFactory
+    Фабричный интерфейс
+    для создания автомобилей
+end note
+
+class SedanFactory implements CarFactory {
+    + createCar(): Car
+}
+note right of SedanFactory
+    Завод по производству седанов
+end note
+
+class SUVFactory implements CarFactory {
+    + createCar(): Car
+}
+note right of SUVFactory
+    Завод по производству внедорожников
+end note
+
+class Client {
+    - factory: CarFactory
+    + Client(factory: CarFactory)
+    + orderCar(): void
+}
+note left of Client
+    Клиент, заказывающий автомобиль
+    через фабрику
+end note
+
+Client --> CarFactory
+CarFactory <|.. SedanFactory
+CarFactory <|.. SUVFactory
+Car <|.. Sedan
+Car <|.. SUV
+SedanFactory --> Sedan
+SUVFactory --> SUV
+
+@enduml
